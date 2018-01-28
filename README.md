@@ -1,6 +1,4 @@
 ## The Seedbox From Scratch Script
-Donate by buying me a Beer : BTC address: 1DCQC5U5zgUMJUGsEniznnKstfNwF3YVMk
-## [Wiki](https://github.com/dannyti/sboxsetup/wiki)    ||    [FAQ](https://github.com/dannyti/sboxsetup/wiki/FAQ)
 ## Current version = 14.06
 
 This script will provide ssl only links, Sorry http :(
