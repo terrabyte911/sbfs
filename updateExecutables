@@ -32,6 +32,7 @@ sudo chmod +x /etc/seedbox-from-scratch/installWebmin
 sudo chmod +x /etc/seedbox-from-scratch/downgradeRTorrent
 sudo chmod +x /etc/seedbox-from-scratch/upgradeRTorrent
 sudo chmod +x /etc/seedbox-from-scratch/ovpni
+sudo chmod +x /etc/seedbox-from-scratch/ovpni2
 sudo chmod +x /etc/seedbox-from-scratch/installSABnzbd
 sudo chmod +x /etc/seedbox-from-scratch/updategitRepository
 sudo chmod +x /etc/seedbox-from-scratch/createOpenSSLServiceCertificate
