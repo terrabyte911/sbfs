@@ -60,13 +60,16 @@ fi
 
 newclient () {
 	# Where to write the custom client.ovpn?
-	if [ -e /home/$1 ]; then  # if $1 is a user name
-		homeDir="/home/$1"
-	elif [ ${SUDO_USER} ]; then   # if not, use SUDO_USER
-		homeDir="/home/${SUDO_USER}"
-	else  # if not SUDO_USER, use /root
-		homeDir="/root"
-	fi
+	# if [ -e /home/$1 ]; then  # if $1 is a user name
+		# homeDir="/home/$1"
+	# elif [ ${SUDO_USER} ]; then   # if not, use SUDO_USER
+		# homeDir="/home/${SUDO_USER}"
+	# else  # if not SUDO_USER, use /root
+		# homeDir="/root"
+	# fi
+	# Generates the custom client.ovpn
+	homeDir="/root"
+
 	# Generates the custom client.ovpn
 	cp /etc/openvpn/client-template.txt $homeDir/$1.ovpn
 	echo "<ca>" >> $homeDir/$1.ovpn
