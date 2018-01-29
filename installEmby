@@ -1,2 +1,15 @@
-wget https://github.com/MediaBrowser/Emby/releases/download/3.2.70.0/emby-server-deb_3.2.70.0_amd64.deb
-dpkg -i emby-server-deb_3.2.70.0_amd64.deb
+#!/bin/bash
+IPADDRESS1=`cat /etc/seedbox-from-scratch/hostname.info`
+logfile="/dev/null"
+
+echo "Installing Emby Media Server . . . ."
+
+wget https://github.com/MediaBrowser/Emby/releases/download/3.2.70.0/emby-server-deb_3.2.70.0_amd64.deb >> $logfile 2>&1
+dpkg -i emby-server-deb_3.2.70.0_amd64.deb >> $logfile 2>&1
+
+echo ""
+echo "Emby Media Server is installed"
+echo ""
+echo "To enable remote access, set up ssh tunnel;"
+echo "and access - http://$IPADDRESS1:8096/web"
+echo ""
