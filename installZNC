@@ -10,7 +10,7 @@ if [ `logname` = "$MAINUSER1" ]; then
   echo ""
   cd ~
   if [ "$(crontab -l 2> /dev/null | grep -c znc)" == "0" ]; then
-  wget --no-check-certificate https://raw.githubusercontent.com/dannyti/sboxsetup/master/startznc
+  wget --no-check-certificate https://raw.githubusercontent.com/terrabyte911/sboxsetup/master/startznc
   perl -pi -e "s/USERNAME/`logname`/g" startznc
   chmod +x startznc
   bash startznc
