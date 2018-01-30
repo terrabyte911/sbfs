@@ -690,7 +690,7 @@ cd ..
 sudo chown -v -R $NEWUSER1: private
 #sudo chmod 400 $HOMEJAILED1/$NEWUSER1.info
 cd $HOMEJAILED1/
-sudo wget --no-check-certificate https://raw.githubusercontent.com/dannyti/sboxsetup/master/crontabentries
+sudo wget --no-check-certificate https://raw.githubusercontent.com/terrabyte911/sboxsetup/master/crontabentries
 sudo perl -pi -e "s/USERNAME/$NEWUSER1/g" $HOMEJAILED1/crontabentries
 sudo chmod +x $HOMEJAILED1/crontabentries
 sudo bash $HOMEJAILED1/crontabentries
@@ -720,8 +720,8 @@ sudo echo "alias vcsd15='vcs *.mp4 -U0 -i 15m -c 3 -H 200 -a 300/200 -o ~/moviei
 
 sudo mkdir $HOMEJAILED1/bin
 cd $HOMEJAILED1/bin
-sudo wget --no-check-certificate https://raw.githubusercontent.com/dannyti/sboxsetup/master/rtcheck
-sudo wget --no-check-certificate https://raw.githubusercontent.com/dannyti/sboxsetup/master/mtn.sh
+sudo wget --no-check-certificate https://raw.githubusercontent.com/terrabyte911/sboxsetup/master/rtcheck
+sudo wget --no-check-certificate https://raw.githubusercontent.com/terrabyte911/sboxsetup/master/mtn.sh
 sudo chmod +x rtcheck
 sudo chmod +x mtn.sh
 sudo rm $HOMEJAILED1/crontabentries
