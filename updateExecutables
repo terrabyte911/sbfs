@@ -24,6 +24,7 @@
 #
 
 sudo chmod +x /etc/seedbox-from-scratch/updateExecutables
+sudo chmod +x /etc/seedbox-from-scratch/installOBssh
 sudo chmod +x /etc/seedbox-from-scratch/createSeedboxUser
 sudo chmod +x /etc/seedbox-from-scratch/deleteSeedboxUser
 sudo chmod +x /etc/seedbox-from-scratch/installEmby
