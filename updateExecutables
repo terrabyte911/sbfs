@@ -49,5 +49,10 @@ sudo chmod +x /etc/seedbox-from-scratch/installCurl
 sudo chmod +x /etc/seedbox-from-scratch/installSICKRAGETV
 sudo chmod +x /etc/seedbox-from-scratch/installDiskspacePlugin
 sudo chmod +x /etc/seedbox-from-scratch/iptodomain
+sudo chmod +x /etc/seedbox-from-scratch/installPLEX
+sudo chmod +x /etc/seedbox-from-scratch/installSICKRAGE
+sudo chmod +x /etc/seedbox-from-scratch/installSUBSONIC
+sudo chmod +x /etc/seedbox-from-scratch/installVNC
+sudo chmod +x /etc/seedbox-from-scratch/installZNC
 
 ##################### LAST LINE ###########
