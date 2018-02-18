@@ -1,3 +1,4 @@
+#!/bin/bash
 # Start a simple file server
 #
 # By Terrabyte911 18/2/2018
@@ -8,7 +9,7 @@ if [ -z "$1" ]; then
 else
     PORT="$1"
 fi
-    IP=$(wget -qO- ipv4.icanhazip.com)
+    IP=`cat /etc/seedbox-from-scratch/hostname.info`
     echo ""
     echo ""
     echo "Server started - http://$IP:$PORT"
