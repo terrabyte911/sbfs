@@ -1,17 +1,18 @@
 #!/bin/bash
+VERSION1=3.3.1.0
 IPADDRESS1=`cat /etc/seedbox-from-scratch/hostname.info`
 logfile="/dev/null"
 OS1=$(lsb_release -si)
 if [ `getconf LONG_BIT` = "64" ]; then
   echo "Downloading Emby..."
-  wget https://github.com/MediaBrowser/Emby/releases/download/3.3.1.0/emby-server-deb_3.3.1.0_amd64.deb >> $logfile 2>&1
+  wget https://github.com/MediaBrowser/Emby/releases/download/$VERSION1/emby-server-deb_$VERSION1_amd64.deb >> $logfile 2>&1
   if [ $? -eq 0 ]
     then
       echo "Installing Emby Media Server, please wait"
-      dpkg -i emby-server-deb_3.3.1.0_amd64.deb >> $logfile 2>&1
-      rm emby-server-deb_*_amd64.deb
+      dpkg -i emby-server-deb_$VERSION1_amd64.deb >> $logfile 2>&1
+      rm emby-server-deb*
     else
-      echo "Emby server not found, please check url."
+      echo "Emby server version $VERSION1 not found, please check url."
       exit 0
   fi
 else
