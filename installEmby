@@ -3,10 +3,17 @@ IPADDRESS1=`cat /etc/seedbox-from-scratch/hostname.info`
 logfile="/dev/null"
 OS1=$(lsb_release -si)
 if [ `getconf LONG_BIT` = "64" ]; then
-  echo "Installing Emby Media Server . . . ."
-  wget https://github.com/MediaBrowser/Emby/releases/download/3.2.70.0/emby-server-deb_3.2.70.0_amd64.deb >> $logfile 2>&1
-  dpkg -i emby-server-deb_3.2.70.0_amd64.deb >> $logfile 2>&1
-  rm emby-server-deb_*_amd64.deb
+  echo "Downloading Emby..."
+  wget https://github.com/MediaBrowser/Emby/releases/download/3.3.1.0/emby-server-deb_3.3.1.0_amd64.deb >> $logfile 2>&1
+  if [ $? -eq 0 ]
+    then
+      echo "Installing Emby Media Server, please wait"
+      dpkg -i emby-server-deb_3.3.1.0_amd64.deb >> $logfile 2>&1
+      rm emby-server-deb_*_amd64.deb
+    else
+      echo "Emby server not found, please check url."
+      exit 0
+  fi
 else
   echo "Sorry, Emby Media Server is for 64bit systems only."
   echo ""
