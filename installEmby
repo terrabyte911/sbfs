@@ -7,6 +7,7 @@ if [ `getconf LONG_BIT` = "64" ]; then
   echo "Downloading Emby version $VERSION1 ..."
   echo
   wget https://github.com/MediaBrowser/Emby.Releases/releases/download/"$VERSION1"/emby-server-deb_"$VERSION1"_amd64.deb -q --show-progress
+  echo
   if [ $? -eq 0 ]
     then
       echo "Installing Emby Media Server, please wait"
