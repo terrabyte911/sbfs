@@ -1,15 +1,16 @@
 #!/bin/bash
 VERSION1=3.3.1.0
 IPADDRESS1=`cat /etc/seedbox-from-scratch/hostname.info`
-logfile="/dev/null"
+logfile="/dev/null 2>&1"
 OS1=$(lsb_release -si)
 if [ `getconf LONG_BIT` = "64" ]; then
-  echo "Downloading Emby..."
-  wget https://github.com/MediaBrowser/Emby.Releases/releases/download/$VERSION1/emby-server-deb_$VERSION1_amd64.deb >> $logfile 2>&1
+  echo "Downloading Emby version $VERSION1 ..."
+  echo
+  wget https://github.com/MediaBrowser/Emby.Releases/releases/download/"$VERSION1"/emby-server-deb_"$VERSION1"_amd64.deb -q --show-progress
   if [ $? -eq 0 ]
     then
       echo "Installing Emby Media Server, please wait"
-      dpkg -i emby-server-deb_$VERSION1_amd64.deb >> $logfile 2>&1
+      dpkg -i emby-server-deb_"$VERSION1"_amd64.deb >> $logfile
       rm emby-server-deb*
     else
       echo "Emby server version $VERSION1 not found, please check url."
@@ -26,3 +27,4 @@ echo ""
 echo "To enable remote access, set up ssh tunnel;"
 echo "and access - http://$IPADDRESS1:8096"
 echo ""
+
