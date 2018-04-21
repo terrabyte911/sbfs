@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# install ipset
+which ipset >/dev/null 2>&1
+if [ $? -eq 1 ] ; then
+        apt-get install ipset -y
+else
+        ipset flush blockall
+        iptables -D INPUT -p tcp -m tcp -m multiport -m set -j DROP ! --dports 80,443 --match-set blockall src >/dev/null 2>&1
+        ipset destroy blockall
+fi
+
+# netherlands,china,brazil,taiwan,turkey,portugal,pakistan,saudi arabia,israel,hongkong,korea
+COUNTRIES="nl cn br tw tr pt pk sa il hk kr ae eg ar ua ru"
+
+ipset -N blockall hash:net
+
+for country in $COUNTRIES; do
+         echo ""
+         echo "Country Zone: $country.zone"
+         echo ""
+         wget -O - http://www.ipdeny.com/ipblocks/data/aggregated/$country-aggregated.zone 2>/dev/null | while read ip; do
+                # wget -O - http://www.ipdeny.com/ipblocks/data/countries/$country.zone 2>/dev/null | while read ip; do
+                ipset -A blockall $ip;
+        done
+done
+
+iptables -C INPUT -p tcp -m tcp -m multiport -m set -j DROP ! --dports 80,443 --match-set blockall src >/dev/null 2>&1
+if [ $? -eq 1 ]
+then
+  iptables -A INPUT -p tcp -m tcp -m multiport -m set -j DROP ! --dports 80,443 --match-set blockall src
+fi
+iptables-save > /etc/iptables.up.rules
