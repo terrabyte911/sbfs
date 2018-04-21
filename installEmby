@@ -5,7 +5,7 @@ logfile="/dev/null"
 OS1=$(lsb_release -si)
 if [ `getconf LONG_BIT` = "64" ]; then
   echo "Downloading Emby..."
-  wget https://github.com/MediaBrowser/Emby/releases/download/$VERSION1/emby-server-deb_$VERSION1_amd64.deb >> $logfile 2>&1
+  wget https://github.com/MediaBrowser/Emby.Releases/releases/download/$VERSION1/emby-server-deb_$VERSION1_amd64.deb >> $logfile 2>&1
   if [ $? -eq 0 ]
     then
       echo "Installing Emby Media Server, please wait"
