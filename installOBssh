@@ -2,8 +2,13 @@
 clear
 echo ""
 read -p "Enter Obfuscated Port: " port
-
-read -p "Enter Obfuscated Keyword (10 characters maximum): " keyword
+while true; do
+    read -s -p "Enter Obfuscated Keyword (10 characters maximum): " keyword
+    echo
+    read -s -p "Keyword (again): " keyword2
+    echo
+    [ "$keyword" = "$keyword2" ] && break || echo "Keywords do not match, please try again" ; echo
+done
 
 #update system, install compiler and other dependent.
 apt-get update
