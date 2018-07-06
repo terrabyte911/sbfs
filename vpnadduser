@@ -5,12 +5,16 @@
 
 
 if [ -z "$1" ]; then
-	logger "VPN-ADD-USER::ERROR - No client name supplied"
+	ERRORMSG="No client name supplied"
+	logger "VPN-ADD-USER::ERROR - $ERRORMSG"
+	echo $ERRORMSG
 	exit 1
 fi
 
 if [[ "$EUID" -ne 0 ]]; then
-	logger "VPN-ADD-USER::ERROR - Sorry, you need to run this as root"
+	ERRORMSG="Sorry, you need to run this as root"
+	logger "VPN-ADD-USER::ERROR - $ERRORMSG"
+	echo $ERRORMSG
 	exit 1
 fi
 
@@ -40,7 +44,6 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 	}
 
 	IP=$(wget -qO- ipv4.icanhazip.com)
-
 	CLIENT="$1"
 	cd /etc/openvpn/easy-rsa/
 	./easyrsa build-client-full $CLIENT nopass
@@ -56,7 +59,8 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 	rm $CLIENT.ovpn
 	exit
 else
-	echo "OpenVPN not installed"
-	logger "VPN-ADD-USER::ERROR - OpenVPN not installed"
+	ERRORMSG="OpenVPN not installed"
+	logger "VPN-ADD-USER::ERROR - $ERRORMSG"
+	echo $ERRORMSG
 	exit 1
 fi
