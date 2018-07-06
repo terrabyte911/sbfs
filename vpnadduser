@@ -51,5 +51,6 @@ else
 	PASSWRD="$2"
 	zip --password $PASSWRD $CLIENT.zip $CLIENT.ovpn
 fi
+rm $CLIENT.ovpn
 exit
 
