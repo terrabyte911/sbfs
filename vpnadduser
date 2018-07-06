@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# OpenVPN server add user script
+# Usage: vpnadduser name [zip password]
+
+
+if [ -z "$1" ]; then
+	logger "VPN-ADD-USER:: No client name supplied"
+	exit 1
+fi
+
+if [[ "$EUID" -ne 0 ]]; then
+	logger "VPN-ADD-USER:: Sorry, you need to run this as root"
+	exit 1
+fi
+
+OPENVPNPORT1=`cat /etc/seedbox-from-scratch/openvpn.info`
+
+newclient () {
+	# Where to write the custom client.ovpn?
+	homeDir="/var/www"
+
+	# Generates the custom client.ovpn
+	cp /etc/openvpn/client-template.txt $homeDir/$1.ovpn
+	echo "<ca>" >> $homeDir/$1.ovpn
+	cat /etc/openvpn/easy-rsa/pki/ca.crt >> $homeDir/$1.ovpn
+	echo "</ca>" >> $homeDir/$1.ovpn
+	echo "<cert>" >> $homeDir/$1.ovpn
+	cat /etc/openvpn/easy-rsa/pki/issued/$1.crt >> $homeDir/$1.ovpn
+	echo "</cert>" >> $homeDir/$1.ovpn
+	echo "<key>" >> $homeDir/$1.ovpn
+	cat /etc/openvpn/easy-rsa/pki/private/$1.key >> $homeDir/$1.ovpn
+	echo "</key>" >> $homeDir/$1.ovpn
+	echo "key-direction 1" >> $homeDir/$1.ovpn
+	echo "<tls-auth>" >> $homeDir/$1.ovpn
+	cat /etc/openvpn/tls-auth.key >> $homeDir/$1.ovpn
+	echo "</tls-auth>" >> $homeDir/$1.ovpn
+}
+
+IP=$(wget -qO- ipv4.icanhazip.com)
+
+CLIENT="$1"
+cd /etc/openvpn/easy-rsa/
+./easyrsa build-client-full $CLIENT nopass
+# Generates the custom client.ovpn
+newclient "$CLIENT"
+cd $homeDir
+if [ -z "$2" ]; then
+	zip $CLIENT.zip $CLIENT.ovpn
+else
+	PASSWRD="$2"
+	zip --password $PASSWRD $CLIENT.zip $CLIENT.ovpn
+fi
+exit
+
