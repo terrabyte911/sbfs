@@ -24,6 +24,7 @@
 #
 
 sudo chmod +x /etc/seedbox-from-scratch/updateExecutables
+sudo chmod +x /etc/seedbox-from-scratch/vpnadduser
 sudo chmod +x /etc/seedbox-from-scratch/installOBssh
 sudo chmod +x /etc/seedbox-from-scratch/installIPblock
 sudo chmod +x /etc/seedbox-from-scratch/FileServer
