@@ -3,6 +3,8 @@
 # OpenVPN server add user script
 # Usage: vpnadduser name [zip password]
 
+bold="\033[1m"
+normal="\033[0m"
 
 if [ -z "$1" ]; then
 	ERRORMSG="No client name supplied"
@@ -23,9 +25,6 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 	OPENVPNPORT1=`cat /etc/seedbox-from-scratch/openvpn.info`
 
 	newclient () {
-		# Where to write the custom client.ovpn?
-		homeDir="/var/www"
-
 		# Generates the custom client.ovpn
 		cp /etc/openvpn/client-template.txt $homeDir/$1.ovpn
 		echo "<ca>" >> $homeDir/$1.ovpn
@@ -44,19 +43,43 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 	}
 
 	IP=$(wget -qO- ipv4.icanhazip.com)
+	homeDir="/var/www"
 	CLIENT="$1"
+    	PASSWORD="$2"
+	vpnup="/etc/seedbox-from-scratch/vpn_up.bat"
+	vpndown="/etc/seedbox-from-scratch/vpn_down.bat"
+	clientup="$homeDir/$1_up.bat"
+	clientdown="$homeDir/$1_down.bat"
+    
 	cd /etc/openvpn/easy-rsa/
 	./easyrsa build-client-full $CLIENT nopass
-	# Generates the custom client.ovpn
-	newclient "$CLIENT"
-	cd $homeDir
-	if [ -z "$2" ]; then
-		zip $CLIENT.zip $CLIENT.ovpn
+	if [ $? -eq 0 ]
+	then
+		# Generates the custom client.ovpn
+		newclient "$CLIENT"
+		cd $homeDir
+		if [ -z "$2" ]; then
+			if [ -z "$3" ]; then
+				zip $CLIENT.zip $CLIENT.ovpn
+			else
+				cp $vpnup $clientup
+				cp $vpndown $clientdown
+				zip $CLIENT.zip $CLIENT.ovpn "$1"_up.bat "$1"_down.bat
+			fi
+		else
+			if [ -z "$3" ]; then
+				zip --password $PASSWORD $CLIENT.zip $CLIENT.ovpn
+			else
+				cp $vpnup $clientup
+				cp $vpndown $clientdown
+				zip --password $PASSWORD $CLIENT.zip $CLIENT.ovpn "$1"_up.bat "$1"_down.bat
+			fi
+		fi
+		rm $CLIENT.ovpn "$1"_up.bat "$1"_down.bat
 	else
-		PASSWRD="$2"
-		zip --password $PASSWRD $CLIENT.zip $CLIENT.ovpn
+    		echo
+		echo "No client file created!"
 	fi
-	rm $CLIENT.ovpn
 	exit
 else
 	ERRORMSG="OpenVPN not installed"
