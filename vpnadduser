@@ -45,7 +45,7 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 	IP=$(wget -qO- ipv4.icanhazip.com)
 	homeDir="/var/www"
 	CLIENT="$1"
-    	PASSWORD="$2"
+    PASSWORD="$2"
 	vpnup="/etc/seedbox-from-scratch/vpn_up.bat"
 	vpndown="/etc/seedbox-from-scratch/vpn_down.bat"
 	clientup="$homeDir/$1_up.bat"
@@ -65,6 +65,7 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 				cp $vpnup $clientup
 				cp $vpndown $clientdown
 				zip $CLIENT.zip $CLIENT.ovpn "$1"_up.bat "$1"_down.bat
+				rm "$1"_up.bat "$1"_down.bat
 			fi
 		else
 			if [ -z "$3" ]; then
@@ -73,11 +74,12 @@ if [[ -e /etc/openvpn/server.conf ]]; then
 				cp $vpnup $clientup
 				cp $vpndown $clientdown
 				zip --password $PASSWORD $CLIENT.zip $CLIENT.ovpn "$1"_up.bat "$1"_down.bat
+				rm "$1"_up.bat "$1"_down.bat
 			fi
 		fi
-		rm $CLIENT.ovpn "$1"_up.bat "$1"_down.bat
+		rm $CLIENT.ovpn
 	else
-    		echo
+    	echo
 		echo "No client file created!"
 	fi
 	exit
